@@ -4,20 +4,19 @@
 Sequence::Sequence(string filename)
 {
 	ifile.open(filename);
+	string tmp;
+        getline(ifile,sequence);
+        while(getline(ifile,tmp) )
+        {
+                sequence+=tmp;
+
+        }
+
 }
 
 int Sequence::length()
 {
-	string tmp;
-	getline(ifile,sequence);
-	while(getline(ifile,tmp) )
-        {
-		sequence+=tmp;
-
-	}
-
 	return sequence.length();
-
 }
 
 
