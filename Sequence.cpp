@@ -1,8 +1,11 @@
 #include"Sequence.h"
+#include<vector>
+#include<algorithm>
 Sequence::Sequence(string filename)
 {
 	ifile.open(filename);
 }
+
 int Sequence::length()
 {
 	string tmp;
@@ -18,6 +21,7 @@ int Sequence::length()
 }
 
 
+
 int Sequence::numberOf(char base)
 {
 	int number=0;
@@ -27,6 +31,7 @@ int Sequence::numberOf(char base)
 	}
 	return number;
 }
+
 
 
 string Sequence::longestConsecutive()
@@ -60,12 +65,48 @@ string Sequence::longestConsecutive()
 		longestConse+=tmpstring;
 	}
 
+
 	return longestConse;
 }
 
+
+
 string Sequence::longestRepeated()
 {
+	string s=sequence;
+	vector<string> vs(s.length());
+    for(int i = 0;i<s.length();i++)
+	{
+       vs[i] = s.substr(s.length()-i-1,160);
+	}
+    sort(vs.begin(),vs.end());
+	int maxLen = 0;
+    string ret;
+    for(int i = 0;i<vs.size()-1;i++){
+        string cur = vs[i];
+        string suf = vs[i+1];
 
+        int tlen = 0;
+        for(int j = 0;j<min(cur.length(),suf.length());j++){
+            if(cur[j]!=suf[j]){
+                tlen = 0;
+                break;
+            }
+            else if(cur[j]==suf[j]){
+                tlen++;
+            }
+       
+            if(tlen>maxLen){
+                maxLen =tlen;
+                ret = suf.substr(0,maxLen);
+            }
+        }
+    }
+	return ret;
+	
 
 
 }
+
+
+
