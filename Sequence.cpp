@@ -40,15 +40,17 @@ string Sequence::longestConsecutive()
 	char longest=sequence[0];
 	int tmplength=1;
 	int length=1;
+	int site=0;
 	for(int i=1;i<sequence.length();i++)
 	{
-		if(sequence[i]==tmpchar) tmplength++;
+		if(sequence[i]==tmpchar&&sequence[i+length]==tmpchar) tmplength++;
 		else
 		{
 			if(tmplength>length)
 			{
 				length=tmplength;
 				longest=tmpchar;
+				site=i;
 			}
 			tmpchar=sequence[i];
 			tmplength=1;
@@ -56,50 +58,38 @@ string Sequence::longestConsecutive()
 	
 	}
 	
-	string longestConse;
-	string tmpstring="a";
-	tmpstring[0]=longest;
-	longestConse[0]=longest;
-	for(int i=0;i<length;i++)	
-	{
-		longestConse+=tmpstring;
-	}
-
-
-	return longestConse;
+	
+	return sequence.substr(site-length,length);
 }
 
 
 
 string Sequence::longestRepeated()
 {
-	string s=sequence;
-	vector<string> vs(s.length());
-    for(int i = 0;i<s.length();i++)
-	{
-       vs[i] = s.substr(s.length()-i-1,160);
+	vector<string> vs(sequence.length());
+        for(int i = 0;i<sequence.length();i++)
+ 	{
+        vs[i] = sequence.substr(sequence.length()-i-1,500);
 	}
-    sort(vs.begin(),vs.end());
+        sort(vs.begin(),vs.end());
 	int maxLen = 0;
-    string ret;
-    for(int i = 0;i<vs.size()-1;i++){
+        string ret;
+        for(int i = 0;i<vs.size()-1;i++){
         string cur = vs[i];
-        string suf = vs[i+1];
+        string next = vs[i+1];
 
-        int tlen = 0;
-        for(int j = 0;j<min(cur.length(),suf.length());j++){
-            if(cur[j]!=suf[j]){
-                tlen = 0;
-                break;
-            }
-            else if(cur[j]==suf[j]){
-                tlen++;
-            }
+        int tmplen = 0;
+        for(int j = 0;j<min(cur.length(),next.length());j++)
+	{
+	            if(cur[j]!=next[j]){ tmplen = 0;break;}
+    	        else if(cur[j]==next[j]){tmplen++;
+        }
        
-            if(tlen>maxLen){
-                maxLen =tlen;
-                ret = suf.substr(0,maxLen);
-            }
+            if(tmplen>maxLen)
+		{
+                maxLen =tmplen;
+                ret = next.substr(0,maxLen);
+                }
         }
     }
 	return ret;
