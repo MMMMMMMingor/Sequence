@@ -58,7 +58,7 @@ string Sequence::longestConsecutive()
 	}
 	
 	
-	return sequence.substr(site-length,length);
+	return sequence.substr(site-length,length+1);
 }
 
 
