@@ -68,29 +68,29 @@ string Sequence::longestRepeated()
 	vector<string> vs(sequence.length());
         for(int i = 0;i<sequence.length();i++)
  	{
-        vs[i] = sequence.substr(sequence.length()-i-1,500);
+        	vs[i] = sequence.substr(i,2000);
 	}
         sort(vs.begin(),vs.end());
-	int maxLen = 0;
+	int maxLen = 1;
         string ret;
-        for(int i = 0;i<vs.size()-1;i++){
-        string cur = vs[i];
-        string next = vs[i+1];
-
-        int tmplen = 0;
-        for(int j = 0;j<min(cur.length(),next.length());j++)
+	int tmplen=0;
+        for(int i = 0;i<vs.size()-1;i++)
 	{
-	            if(cur[j]!=next[j]){ tmplen = 0;break;}
-    	        else if(cur[j]==next[j]){tmplen++;
-        }
-       
-            if(tmplen>maxLen)
+        	string cur = vs[i];
+        	string next = vs[i+1];
+        	for(int j = 0;j<min(cur.length(),next.length());j++)
 		{
-                maxLen =tmplen;
-                ret = next.substr(0,maxLen);
-                }
-        }
-    }
+	        	    if(cur[j]!=next[j]){ tmplen = 0;break;}
+    	        	else if(cur[j]==next[j]){tmplen++;}
+			if(tmplen>maxLen)
+                        {
+                        maxLen =tmplen;
+                        ret = next.substr(0,maxLen);
+                        }
+
+   		}
+
+    	}
 	return ret;
 	
 
